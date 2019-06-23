@@ -1,17 +1,17 @@
 ﻿using Library.Business.Contracts;
-using Library.Data.Contracts;
+using Library.Data;
 using Library.Data.Models;
 
 namespace Library.Business.Services
 {
     public class AuthorsService: ServiceBase<Author>, IAuthorsService
     {
-        public AuthorsService(IGenericRepository<Author> repository)
-            : base(repository)
+        public AuthorsService(LibraryDbContext context)
+            : base(context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
-        private readonly IGenericRepository<Author> repository;
+        private readonly LibraryDbContext context;
     }
 }
