@@ -1,7 +1,8 @@
-﻿using Library.Business.Contracts;
+﻿using AutoMapper;
+using Library.Business.Contracts;
 using Library.Business.Services;
+using Library.Common.Providers;
 using Library.Data;
-using Library.Data.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,8 @@ namespace Library.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             this.RegisterData(services);
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper();
+            services.AddScoped<IMappingProvider, MappingProvider>();
             services.AddTransient<IAuthorsService, AuthorsService>();
         }
 

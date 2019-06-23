@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library.Common\Library.Common.csproj" />
-    <ProjectReference Include="..\Library.Data\Library.Data.csproj" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
   </ItemGroup>
 
 </Project>
