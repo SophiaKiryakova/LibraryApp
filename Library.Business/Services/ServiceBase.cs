@@ -1,6 +1,5 @@
 ﻿using Library.Business.Contracts;
 using Library.Data;
-using Library.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -14,7 +13,7 @@ namespace Library.Business.Services
     {
         public ServiceBase(LibraryDbContext context)
         {
-            this.context = context != null ? context : throw new ArgumentNullException("An instance of LibraryContext is required to use this repository.");
+            this.context = context ?? throw new ArgumentNullException("An instance of LibraryContext is required to use this repository.");
             this.dbSet = context.Set<T>();
         }
 

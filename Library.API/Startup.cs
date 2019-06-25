@@ -5,6 +5,7 @@ using Library.Common.Providers;
 using Library.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace Library.API
             services.AddAutoMapper();
             services.AddScoped<IMappingProvider, MappingProvider>();
             services.AddTransient<IAuthorsService, AuthorsService>();
+            services.AddTransient<IBooksService, BooksService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,14 @@ namespace Library.API
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected error occured. Please, try again later.");
+                    });
+                });
             }
 
             app.UseHttpsRedirection();
