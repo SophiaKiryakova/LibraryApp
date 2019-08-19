@@ -1,5 +1,6 @@
 ﻿using Library.Business.Contracts;
 using Library.Data;
+using Library.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 namespace Library.Business.Services
 {
     public abstract class ServiceBase<T> : IServiceBase<T>
-        where T : class
+        where T : BaseEntity
     {
         public ServiceBase(LibraryDbContext context)
         {
@@ -19,8 +20,8 @@ namespace Library.Business.Services
 
         public IQueryable<T> GetAll()
         {
-            return this.dbSet.AsQueryable();
-            // .Where(e => !e.IsDeleted)
+            return this.dbSet.AsQueryable()
+                .Where(e => !e.IsDeleted);
         }
 
         public IQueryable<T> GetAllAndDeleted()
@@ -61,8 +62,8 @@ namespace Library.Business.Services
                 throw new ArgumentNullException("Entity cannot be null");
             }
 
-            //entity.IsDeleted = true;
-            //entity.DeletedOn = DateTime.Now;
+            entity.IsDeleted = true;
+            entity.DeletedOn = DateTime.Now;
 
             var entry = this.context.Entry(entity);
 
