@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Library.Data.Models
+namespace Library.Data.Dtos
 {
     public class AuthorCreateDto
     {

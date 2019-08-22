@@ -1,4 +1,5 @@
-﻿using Library.Business.Contracts;
+﻿using AutoMapper;
+using Library.Business.Contracts;
 using Library.Common.Providers;
 using Library.Data.Dtos;
 using Library.Data.Models;
@@ -90,6 +91,30 @@ namespace Library.API.Controllers
             this.booksService.Add(bookEntity);
 
             return CreatedAtRoute("GetBookForAuthor", new { id = bookEntity.Id, authorId = authorId }, bookEntity);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateBook(int id, [FromBody] BookDto bookDto)
+        {
+            if (bookDto == null)
+            {
+                return BadRequest();
+            }
+
+            var book = this.booksService.GetAll().FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var toBeUpdated = this.mapper.Map(bookDto, book);
+
+            this.booksService.Update(toBeUpdated);
+
+            var returnDto = this.mapper.MapTo<BookDto>(toBeUpdated);
+
+            return Ok(returnDto);
         }
 
         [HttpDelete("{id}")]

@@ -18,6 +18,11 @@ namespace Library.Common.Providers
             return this.mapper.Map<TDestination>(source);
         }
 
+        public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
+        {
+            return this.mapper.Map<TSource, TDestination>(source, destination);
+        }
+
         public IQueryable<TDestination> ProjectTo<TDestination>(IQueryable<object> source)
         {
             return this.mapper.ProjectTo<TDestination>(source);

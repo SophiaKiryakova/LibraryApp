@@ -7,6 +7,8 @@ namespace Library.Common.Providers
     {
         TDestination MapTo<TDestination>(object source);
 
+        TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
+
         IQueryable<TDestination> ProjectTo<TDestination>(IQueryable<object> source);
 
         IEnumerable<TDestination> ProjectTo<TDestination>(IEnumerable<object> source);
